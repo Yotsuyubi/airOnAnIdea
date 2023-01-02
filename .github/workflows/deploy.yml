@@ -6,9 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -28,14 +28,17 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v3.5.1
         with:
-          node-version: '18.x'
-          
+          node-version: "18.x"
+
       - name: Install Dependencies
         run: npm install
 
       - name: Build
         run: npm run build
-        
+
+      - name: Post build
+        run: cp build/index.html build/404.html
+
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v1.0.7
         with:
@@ -45,13 +48,13 @@ jobs:
           path: build/
           # Duration after which artifact will expire in days.
           retention-days: 1
-        
+
   deploy:
     needs: build
 
     permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
+      pages: write # to deploy to Pages
+      id-token: write # to verify the deployment originates from an appropriate source
 
     environment:
       name: github-pages
