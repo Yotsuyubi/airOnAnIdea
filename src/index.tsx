@@ -7,15 +7,20 @@ import { ArticlePage } from "./routes/articles/:articleId/ArticlePage";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+const BASE_URL = process.env.PUBLIC_URL;
+
 const router = createBrowserRouter([
   {
-    path: "airOnAnIdea/",
+    path: `${BASE_URL}/`,
     element: <App />,
-    errorElement: <Error />,
   },
   {
-    path: "airOnAnIdea/articles/:articleId",
+    path: `${BASE_URL}/:articleId`,
     element: <ArticlePage />,
+  },
+  {
+    path: `${BASE_URL}/*`,
+    element: <Error />,
   },
 ]);
 
